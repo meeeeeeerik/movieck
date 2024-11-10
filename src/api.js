@@ -16,7 +16,7 @@ class MovieApi {
     return response.data.results;
   }
 
-  static async getRated() {
+  static async getTopRated() {
     const response = await client.get('movie/top_rated?language=en-US&page=1');
 
     return response.data.results;
