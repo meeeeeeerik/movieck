@@ -7,3 +7,19 @@ body {
 
   font-family: 'Lato', sans-serif;
 }
+
+.posters-container::-webkit-scrollbar {
+  display: none;
+}
+
+.backdrop {
+  background-image: linear-gradient(
+      0deg,
+      rgba(24, 24, 24, 1) 0%,
+      rgba(24, 24, 24, 0.09296218487394958) 100%
+    ),
+    var(--url);
+
+  background-size: cover;
+  background-position: 50% 25%;
+}

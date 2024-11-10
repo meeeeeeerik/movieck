@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useState } from 'react';
 import MovieApi from './api';
+import { getRandomMinMax } from './utils';
 
 const genreById = {
   action: 28,
@@ -61,8 +62,6 @@ function App() {
 
   console.log('movies', movies);
 
-  //https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg
-
   const movieList = [
     {
       key: 'upcoming',
@@ -110,13 +109,38 @@ function App() {
     },
   ];
 
+  const randomMovie =
+    movies[movieList[getRandomMinMax(0, movieList.length - 1)].key][
+      getRandomMinMax(0, 19)
+    ];
+
+  if (!randomMovie) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div className="container mx-auto text-3xl">
-      {movieList.map(({ key, title }) => (
-        <Fragment key={title + key}>
-          <h2 className="mb-5 font-bold mt-10">{title}</h2>
-          <div className="overflow-x-auto">
-            <div className="flex gap-7">
+    <div className="min-h-screen">
+      <div
+        className="backdrop h-[80vh] max-w-full"
+        style={{
+          '--url': `url(https://image.tmdb.org/t/p/w1280/${randomMovie.backdrop_path})`,
+        }}
+      >
+        <div className="container mx-auto px-5 pt-[30vh]">
+          <h2 className=" text-8xl font-bold line-clamp-1 mb-5">
+            {randomMovie.original_title}
+          </h2>
+          <button className="h-12 px-5 bg-white text-black rounded-md text-xl font-bold hover:bg-orange-500 hover:text-white transition-all duration-300 mb-5">
+            Details
+          </button>
+          <div className="max-w-2xl line-clamp-3">{randomMovie.overview}</div>
+        </div>
+      </div>
+      <div className="container mx-auto text-3xl px-5">
+        {movieList.map(({ key, title }) => (
+          <Fragment key={title + key}>
+            <h2 className="mb-5 font-bold mt-10">{title}</h2>
+            <div className="posters-container overflow-x-auto overflow-y-hidden flex gap-10">
               {movies[key].map(({ poster_path, title, id }) => (
                 <div
                   key={key + id}
@@ -132,9 +156,9 @@ function App() {
                 </div>
               ))}
             </div>
-          </div>
-        </Fragment>
-      ))}
+          </Fragment>
+        ))}
+      </div>
     </div>
   );
 }
