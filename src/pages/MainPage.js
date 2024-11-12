@@ -1,67 +1,12 @@
-import { Fragment, useEffect, useMemo, useState } from 'react';
-import MovieApi from '../api';
+import { Fragment, useMemo } from 'react';
 import { getRandomMinMax } from '../utils';
-import { Footer } from '../components';
+import { Error, Footer, Loader } from '../components';
 import Backdrop from '../components/Backdrop';
 import Header from '../components/Header';
+import { useMovies } from '../hooks';
 
 function MainPage() {
-  const genreById = {
-    action: 28,
-    adventure: 12,
-    animation: 16,
-    comedy: 35,
-    horror: 27,
-    thriller: 53,
-    fantasy: 14,
-    history: 36,
-  };
-
-  const [movies, setMovies] = useState({
-    upcoming: [],
-    popular: [],
-    topRated: [],
-    adventure: [],
-    action: [],
-    animation: [],
-    comedy: [],
-    horror: [],
-    thriller: [],
-    fantasy: [],
-    history: [],
-  });
-
-  useEffect(() => {
-    Promise.all([
-      MovieApi.getUpcoming(),
-      MovieApi.getPopular(),
-      MovieApi.getTopRated(),
-      MovieApi.getMovieByGenreId(genreById.adventure),
-      MovieApi.getMovieByGenreId(genreById.action),
-      MovieApi.getMovieByGenreId(genreById.animation),
-      MovieApi.getMovieByGenreId(genreById.comedy),
-      MovieApi.getMovieByGenreId(genreById.horror),
-      MovieApi.getMovieByGenreId(genreById.thriller),
-      MovieApi.getMovieByGenreId(genreById.fantasy),
-      MovieApi.getMovieByGenreId(genreById.history),
-    ])
-      .then((responses) =>
-        setMovies({
-          upcoming: responses[0],
-          popular: responses[1],
-          topRated: responses[2],
-          adventure: responses[3],
-          action: responses[4],
-          animation: responses[5],
-          comedy: responses[6],
-          horror: responses[7],
-          thriller: responses[8],
-          fantasy: responses[9],
-          history: responses[10],
-        })
-      )
-      .catch((error) => console.log(error));
-  }, []);
+  const { movies, isLoading, error } = useMovies();
 
   const movieList = useMemo(
     () => [
@@ -121,10 +66,13 @@ function MainPage() {
     [movieList, movies]
   );
 
-  if (!randomMovie) {
-    return <div>Loading...</div>;
+  if (error) {
+    return <Error error={error} />;
   }
 
+  if (isLoading || !randomMovie) {
+    return <Loader />;
+  }
   return (
     <>
       <Header />
