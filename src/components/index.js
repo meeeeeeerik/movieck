@@ -4,3 +4,4 @@ export * from './Footer';
 export * from './Header';
 export * from './input';
 export * from './Loader';
+export * from './Poster';

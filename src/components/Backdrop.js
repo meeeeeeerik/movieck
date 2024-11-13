@@ -1,4 +1,4 @@
-function Backdrop({ children, backdropPath }) {
+export function Backdrop({ children, backdropPath }) {
   return (
     <div
       className="backdrop h-[80vh] max-w-full"
@@ -10,5 +10,3 @@ function Backdrop({ children, backdropPath }) {
     </div>
   );
 }
-
-export default Backdrop;

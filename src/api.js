@@ -29,7 +29,7 @@ class MovieApi {
   }
 
   static async getMovie(id) {
-    const response = await client.get(`movie/${id}?language=en-US`);
+    const response = await client.get(`movie/${id}?append_to_response=videos,similar,credits&language=en-US`);
 
     return response.data;
   }

@@ -1,11 +1,12 @@
 import { Fragment, useMemo } from 'react';
 import { getRandomMinMax } from '../utils';
-import { Error, Footer, Loader } from '../components';
-import Backdrop from '../components/Backdrop';
-import Header from '../components/Header';
+import { Backdrop, Error, Footer, Header, Loader, Poster } from '../components';
 import { useMovies } from '../hooks';
+import { Navigate, useNavigate } from 'react-router-dom';
 
-function MainPage() {
+export function MainPage() {
+  const navigate = useNavigate();
+
   const { movies, isLoading, error } = useMovies();
 
   const movieList = useMemo(
@@ -66,6 +67,10 @@ function MainPage() {
     [movieList, movies]
   );
 
+  const goToMovie = (id) => {
+    navigate(`/movie/${id}`);
+  };
+
   if (error) {
     return <Error error={error} />;
   }
@@ -81,7 +86,7 @@ function MainPage() {
           <h2 className=" text-8xl font-bold line-clamp-1 mb-5">
             {randomMovie.original_title}
           </h2>
-          <button className="h-12 px-5 bg-white text-black rounded-md text-xl font-bold hover:bg-orange-500 hover:text-white transition-all duration-300 mb-5">
+          <button onClick={() => goToMovie(randomMovie.id)} className="h-12 px-5 bg-white text-black rounded-md text-xl font-bold hover:bg-orange-500 hover:text-white transition-all duration-300 mb-5">
             Details
           </button>
           <div className="max-w-2xl line-clamp-3">{randomMovie.overview}</div>
@@ -91,20 +96,9 @@ function MainPage() {
         {movieList.map(({ key, title }) => (
           <Fragment key={title + key}>
             <h2 className="mb-5 font-bold mt-10">{title}</h2>
-            <div className="posters-container overflow-x-auto overflow-y-hidden flex gap-10">
-              {movies[key].map(({ poster_path, title, id }) => (
-                <div
-                  key={key + id}
-                  className="bg-slate-400 min-w-[150px] h-[225px] overflow-hidden cursor-pointer"
-                >
-                  <img
-                    src={`https://image.tmdb.org/t/p/w200${poster_path}`}
-                    alt={title}
-                    width={150}
-                    height={225}
-                    className="hover:scale-125 transition-all duration-700"
-                  />
-                </div>
+            <div className="scrollbar-none overflow-x-auto overflow-y-hidden flex gap-10">
+              {movies[key].map((movie) => (
+                <Poster key={key + movie.id} {...movie} onClick={() => goToMovie(movie.id)} />
               ))}
             </div>
           </Fragment>
@@ -114,5 +108,3 @@ function MainPage() {
     </>
   );
 }
-
-export default MainPage;
