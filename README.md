@@ -1,70 +1,99 @@
-# Getting Started with Create React App
+# Movieck
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern movie discovery web application built with React and powered by [The Movie Database (TMDb) API](https://www.themoviedb.org/). Browse trending movies, explore genre-based collections, view detailed movie info with trailers and cast, and search for any movie in real time.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Home page** — hero backdrop of a random movie, 11 categorized horizontal carousels (Popular, Top Rated, Upcoming, and 8 genre-based lists)
+- **Movie details page** — poster, synopsis, runtime, genres, YouTube trailer in a modal, full cast & crew, and similar movie suggestions
+- **Live search** — debounced search input in the header that navigates to a dedicated results page
+- **Responsive design** — mobile-first layout using Tailwind CSS, works across all screen sizes
+- **Smooth UX** — sticky header, loading spinners, error states, scroll-to-top on navigation
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+| Technology | Purpose |
+|---|---|
+| React 18 | UI framework |
+| React Router DOM 6 | Client-side routing |
+| Axios | HTTP requests to TMDb API |
+| Tailwind CSS 3 | Utility-first styling |
+| React Transition Group | Modal animations |
+| Create React App | Build tooling |
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Pages & Routes
 
-### `npm test`
+| Route | Page | Description |
+|---|---|---|
+| `/` | Main Page | Hero section + movie category carousels |
+| `/movie/:id` | Movie Page | Full movie details, trailer, cast & crew |
+| `/search?q=` | Search Page | Real-time search results grid |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Getting Started
 
-### `npm run build`
+### Prerequisites
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Node.js 16+
+- A free TMDb API key — sign up at [themoviedb.org](https://www.themoviedb.org/signup)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+cd movieck
+npm install
+```
 
-### `npm run eject`
+### Environment Setup
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Create a `.env` file in the project root:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```env
+REACT_APP_TMDB_API_KEY=your_api_key_here
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+> The API key is currently hardcoded in `src/api.js`. Move it to `.env` before deploying.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Running Locally
 
-## Learn More
+```bash
+npm start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Opens the app at [http://localhost:3000](http://localhost:3000).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Build for Production
 
-### Code Splitting
+```bash
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Outputs an optimized bundle to the `build/` directory.
 
-### Analyzing the Bundle Size
+## Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```
+src/
+├── api.js              # MovieApi class — all TMDb endpoints
+├── App.js              # Root component, router setup
+├── components/         # Reusable UI components (Header, Poster, Backdrop, Loader, Error, Footer…)
+├── pages/              # Route-level components (MainPage, MoviePage, SearchPage)
+├── hooks/              # Custom hooks (useMovies, useMovie, useSearchMovies)
+└── utils/              # Helpers (debounce, getRandomMinMax)
+```
 
-### Making a Progressive Web App
+## API Overview
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+All requests go through the `MovieApi` class in [src/api.js](src/api.js):
 
-### Advanced Configuration
+| Method | Endpoint | Description |
+|---|---|---|
+| `getPopular()` | `/movie/popular` | Popular movies |
+| `getTopRated()` | `/movie/top_rated` | Top-rated movies |
+| `getUpcoming()` | `/movie/upcoming` | Upcoming releases |
+| `getMovie(id)` | `/movie/:id` | Movie details + videos + credits + similar |
+| `getMovieByGenreId(id)` | `/discover/movie?with_genres=` | Genre-based lists |
+| `search(query)` | `/search/movie` | Full-text search |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## License
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project was built as part of a frontend development course. Feel free to fork and experiment.
