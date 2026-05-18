@@ -2,6 +2,8 @@
 
 A modern movie discovery web application built with React and powered by [The Movie Database (TMDb) API](https://www.themoviedb.org/). Browse trending movies, explore genre-based collections, view detailed movie info with trailers and cast, and search for any movie in real time.
 
+🚀 **Live demo:** [movieck-by-merik.netlify.app](https://movieck-by-merik.netlify.app/)
+
 ## Features
 
 - **Home page** — hero backdrop of a random movie, 11 categorized horizontal carousels (Popular, Top Rated, Upcoming, and 8 genre-based lists)
@@ -12,22 +14,22 @@ A modern movie discovery web application built with React and powered by [The Mo
 
 ## Tech Stack
 
-| Technology | Purpose |
-|---|---|
-| React 18 | UI framework |
-| React Router DOM 6 | Client-side routing |
-| Axios | HTTP requests to TMDb API |
-| Tailwind CSS 3 | Utility-first styling |
-| React Transition Group | Modal animations |
-| Create React App | Build tooling |
+| Technology             | Purpose                   |
+| ---------------------- | ------------------------- |
+| React 18               | UI framework              |
+| React Router DOM 6     | Client-side routing       |
+| Axios                  | HTTP requests to TMDb API |
+| Tailwind CSS 3         | Utility-first styling     |
+| React Transition Group | Modal animations          |
+| Create React App       | Build tooling             |
 
 ## Pages & Routes
 
-| Route | Page | Description |
-|---|---|---|
-| `/` | Main Page | Hero section + movie category carousels |
-| `/movie/:id` | Movie Page | Full movie details, trailer, cast & crew |
-| `/search?q=` | Search Page | Real-time search results grid |
+| Route        | Page        | Description                              |
+| ------------ | ----------- | ---------------------------------------- |
+| `/`          | Main Page   | Hero section + movie category carousels  |
+| `/movie/:id` | Movie Page  | Full movie details, trailer, cast & crew |
+| `/search?q=` | Search Page | Real-time search results grid            |
 
 ## Getting Started
 
@@ -85,14 +87,14 @@ src/
 
 All requests go through the `MovieApi` class in [src/api.js](src/api.js):
 
-| Method | Endpoint | Description |
-|---|---|---|
-| `getPopular()` | `/movie/popular` | Popular movies |
-| `getTopRated()` | `/movie/top_rated` | Top-rated movies |
-| `getUpcoming()` | `/movie/upcoming` | Upcoming releases |
-| `getMovie(id)` | `/movie/:id` | Movie details + videos + credits + similar |
-| `getMovieByGenreId(id)` | `/discover/movie?with_genres=` | Genre-based lists |
-| `search(query)` | `/search/movie` | Full-text search |
+| Method                  | Endpoint                       | Description                                |
+| ----------------------- | ------------------------------ | ------------------------------------------ |
+| `getPopular()`          | `/movie/popular`               | Popular movies                             |
+| `getTopRated()`         | `/movie/top_rated`             | Top-rated movies                           |
+| `getUpcoming()`         | `/movie/upcoming`              | Upcoming releases                          |
+| `getMovie(id)`          | `/movie/:id`                   | Movie details + videos + credits + similar |
+| `getMovieByGenreId(id)` | `/discover/movie?with_genres=` | Genre-based lists                          |
+| `search(query)`         | `/search/movie`                | Full-text search                           |
 
 ## License
 
